@@ -13,6 +13,7 @@
               </div>
               <progress-bar :progress="progress" v-if="isUploading"></progress-bar>
             </form>
+            <file-viewer></file-viewer>
           </div>
         </div>
       </div>
@@ -21,8 +22,9 @@
 </template>
 
 <script>
-import ProgressBar from "./ProgressBar.vue";
+import ProgressBar from "./ProgressBar";
 import FileInput from "./FileInput";
+import FileViewer from "./FileViewer";
 export default {
   methods: {
     clearFiles() {
@@ -65,7 +67,8 @@ export default {
   },
   components: {
     FileInput,
-    ProgressBar
+    ProgressBar,
+    FileViewer
   },
   data() {
     return {
