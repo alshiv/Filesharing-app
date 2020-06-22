@@ -1,13 +1,20 @@
 <template>
-  <div class="col-md-4">
-    <div class="thumbnail">
-      <img src="http://via.placeholder.com/140x100" alt />
-      <div class="caption">
-        <h3>File Title</h3>
-      </div>
-    </div>
-    <base-timer :time-passed="timePassed"></base-timer>
-  </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">File Title</th>
+      <th scope="col">Timer</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Title</th>
+      <td><base-timer :time-passed="timePassed"></base-timer></td>
+      <td><button type="button" class="btn btn-danger">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
 </template>
 
 <script>
@@ -22,7 +29,7 @@ export default {
 
   },
   mounted: {
-      
+
   },
   components: {
     BaseTimer

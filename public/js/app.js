@@ -1942,12 +1942,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 var FULL_DASH_ARRAY = 283;
-var WARNING_THRESHOLD = 140;
-var ALERT_THRESHOLD = 40;
+var WARNING_THRESHOLD = 1000;
+var ALERT_THRESHOLD = 120;
 var COLOR_CODES = {
   info: {
     color: "green"
@@ -2263,6 +2260,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BaseTimer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BaseTimer */ "./resources/js/components/BaseTimer.vue");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -41058,47 +41062,39 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.newFile
-    ? _c("div", [
-        _c("div", { staticClass: "base-timer" }, [
-          _c(
-            "svg",
-            {
-              staticClass: "base-timer__svg",
-              attrs: {
-                viewBox: "0 0 100 100",
-                xmlns: "http://www.w3.org/2000/svg"
-              }
-            },
-            [
-              _c("g", { staticClass: "base-timer__circle" }, [
-                _c("circle", {
-                  staticClass: "base-timer__path-elapsed",
-                  attrs: { cx: "50", cy: "50", r: "45" }
-                }),
-                _vm._v(" "),
-                _c("path", {
-                  staticClass: "base-timer__path-remaining",
-                  class: _vm.remainingPathColor,
-                  attrs: {
-                    "stroke-dasharray": _vm.circleDasharray,
-                    d:
-                      "\n          M 50, 50\n          m -45, 0\n          a 45,45 0 1,0 90,0\n          a 45,45 0 1,0 -90,0\n        "
-                  }
-                })
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("span", { staticClass: "base-timer__label" }, [
-            _vm._v(_vm._s(_vm.formattedTimeLeft))
-          ])
-        ]),
-        _vm._v(" "),
+    ? _c("div", { staticClass: "base-timer" }, [
         _c(
-          "button",
-          { staticClass: "btn btn-danger", attrs: { type: "button" } },
-          [_vm._v("Delete")]
-        )
+          "svg",
+          {
+            staticClass: "base-timer__svg",
+            attrs: {
+              viewBox: "0 0 100 100",
+              xmlns: "http://www.w3.org/2000/svg"
+            }
+          },
+          [
+            _c("g", { staticClass: "base-timer__circle" }, [
+              _c("circle", {
+                staticClass: "base-timer__path-elapsed",
+                attrs: { cx: "50", cy: "50", r: "45" }
+              }),
+              _vm._v(" "),
+              _c("path", {
+                staticClass: "base-timer__path-remaining",
+                class: _vm.remainingPathColor,
+                attrs: {
+                  "stroke-dasharray": _vm.circleDasharray,
+                  d:
+                    "\n          M 50, 50\n          m -45, 0\n          a 45,45 0 1,0 90,0\n          a 45,45 0 1,0 -90,0\n        "
+                }
+              })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("span", { staticClass: "base-timer__label" }, [
+          _vm._v(_vm._s(_vm.formattedTimeLeft))
+        ])
       ])
     : _vm._e()
 }
@@ -41279,28 +41275,49 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-md-4" },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("base-timer", { attrs: { "time-passed": _vm.timePassed } })
-    ],
-    1
-  )
+  return _c("table", { staticClass: "table" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("tbody", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "row" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c(
+          "td",
+          [_c("base-timer", { attrs: { "time-passed": _vm.timePassed } })],
+          1
+        ),
+        _vm._v(" "),
+        _vm._m(1)
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "thumbnail" }, [
-      _c("img", {
-        attrs: { src: "http://via.placeholder.com/140x100", alt: "" }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "caption" }, [_c("h3", [_vm._v("File Title")])])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("File Title")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Timer")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Delete")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c(
+        "button",
+        { staticClass: "btn btn-danger", attrs: { type: "button" } },
+        [_vm._v("Delete")]
+      )
     ])
   }
 ]

@@ -1,32 +1,29 @@
 <template>
-  <div v-if="newFile">
-    <div class="base-timer">
-      <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g class="base-timer__circle">
-          <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
-          <path
-            :stroke-dasharray="circleDasharray"
-            class="base-timer__path-remaining"
-            :class="remainingPathColor"
-            d="
+  <div class="base-timer" v-if="newFile">
+    <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <g class="base-timer__circle">
+        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
+        <path
+          :stroke-dasharray="circleDasharray"
+          class="base-timer__path-remaining"
+          :class="remainingPathColor"
+          d="
             M 50, 50
             m -45, 0
             a 45,45 0 1,0 90,0
             a 45,45 0 1,0 -90,0
           "
-          />
-        </g>
-      </svg>
-      <span class="base-timer__label">{{ formattedTimeLeft }}</span>
-    </div>
-    <button type="button" class="btn btn-danger">Delete</button>
+        />
+      </g>
+    </svg>
+    <span class="base-timer__label">{{ formattedTimeLeft }}</span>
   </div>
 </template>
 
 <script>
 const FULL_DASH_ARRAY = 283;
-const WARNING_THRESHOLD = 140;
-const ALERT_THRESHOLD = 40;
+const WARNING_THRESHOLD = 1000;
+const ALERT_THRESHOLD = 120;
 
 const COLOR_CODES = {
   info: {
@@ -54,7 +51,7 @@ export default {
   data() {
     return {
       timerInterval: null,
-      newFile: true,
+      newFile: true
     };
   },
 
@@ -107,7 +104,7 @@ export default {
   },
 
   mounted() {
-    this.timePassed < TIME_LIMIT ? this.startTimer() : this.newFile = false;
+    this.timePassed < TIME_LIMIT ? this.startTimer() : (this.newFile = false);
   },
 
   methods: {
