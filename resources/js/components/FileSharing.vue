@@ -29,7 +29,7 @@ export default {
       this.files = []
       this.disableUploadButton = true
     },
-    handleSubmit() {
+    async handleSubmit() {
       this.isUploading = true;
       this.disableUploadButton = true;
       let formData = new FormData();
@@ -37,7 +37,7 @@ export default {
         formData.append("file_name[]", file, file.name);
       }
       formData.append("username", this.auth_user.username);
-      axios
+      await axios
         .post("/api/files", formData, {
           onUploadProgress: e => {
             if (e.lengthComputable) {
