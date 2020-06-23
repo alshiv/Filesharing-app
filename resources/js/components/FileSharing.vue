@@ -38,7 +38,7 @@ export default {
       for (let file of this.files) {
         formData.append("file_name[]", file, file.name);
       }
-      formData.append("username", this.auth_user.username);
+      formData.append("username", this.authUser.username);
       await axios
         .post("/api/files", formData, {
           onUploadProgress: e => {
@@ -78,7 +78,7 @@ export default {
       disableUploadButton: true
     };
   },
-  props: ['auth_user']
+  props: ['auth-user']
 };
 </script>
 

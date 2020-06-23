@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="dfa41eab-0a08-4956-9280-29b7da820814" name="ftp://ivan:monday39@91.195.179.116:6721/" url="http://ftp://ivan:monday39@91.195.179.116:6721/">
+        <fileTransfer host="ftp://ivan:monday39@91.195.179.116:6721" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

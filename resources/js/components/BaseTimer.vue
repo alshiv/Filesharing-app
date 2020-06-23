@@ -43,15 +43,16 @@ const TIME_LIMIT = 3600;
 
 export default {
   props: {
-    timePassed: {
+    timePassedProp: {
       type: Number,
-      default: 0
+      default: Math.floor(Math.random()*1000)
     }
   },
   data() {
     return {
       timerInterval: null,
-      newFile: true
+      newFile: true,
+      timePassed: this.timePassedProp
     };
   },
 
@@ -100,7 +101,7 @@ export default {
         this.onTimesUp();
         this.newFile = false;
       }
-    }
+    },
   },
 
   mounted() {

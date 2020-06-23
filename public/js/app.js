@@ -1961,15 +1961,16 @@ var COLOR_CODES = {
 var TIME_LIMIT = 3600;
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    timePassed: {
+    timePassedProp: {
       type: Number,
-      "default": 0
+      "default": Math.floor(Math.random() * 1000)
     }
   },
   data: function data() {
     return {
       timerInterval: null,
-      newFile: true
+      newFile: true,
+      timePassed: this.timePassedProp
     };
   },
   computed: {
@@ -2199,7 +2200,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _iterator.f();
                 }
 
-                formData.append("username", _this.auth_user.username);
+                formData.append("username", _this.authUser.username);
                 _context.next = 8;
                 return axios.post("/api/files", formData, {
                   onUploadProgress: function onUploadProgress(e) {
@@ -2245,7 +2246,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       disableUploadButton: true
     };
   },
-  props: ['auth_user']
+  props: ['auth-user']
 });
 
 /***/ }),
@@ -2279,15 +2280,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      timePassed: 0
+      items: {},
+      filepath: [],
+      id: ''
     };
   },
-  methods: {},
-  mounted: {},
+  methods: {
+    getFiles: function getFiles() {
+      var _this = this;
+
+      axios.get('/files/get-json').then(function (response) {
+        _this.items = response.data;
+        console.log(_this.items);
+      })["catch"](function (error) {
+        console.log(error.message);
+      });
+    },
+    deleteFile: function deleteFile(event) {
+      var formData = new FormData();
+      this.filepath = event.target.getAttribute('data-filename');
+      this.id = event.target.getAttribute('data-id');
+      formData.append("filepath", this.filepath);
+      formData.append("id", this.id);
+      axios.post('/api/files/delete', formData).then(function (response) {
+        console.log(response); //this.getFiles();
+      })["catch"](function (error) {
+        console.log(error.message);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getFiles();
+  },
   components: {
     BaseTimer: _BaseTimer__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -41275,23 +41307,41 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("tbody", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "row" } }, [_vm._v("Title")]),
+  return _vm.items.length
+    ? _c("table", { staticClass: "table" }, [
+        _vm._m(0),
         _vm._v(" "),
         _c(
-          "td",
-          [_c("base-timer", { attrs: { "time-passed": _vm.timePassed } })],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(1)
+          "tbody",
+          _vm._l(_vm.items, function(item) {
+            return _c("tr", { key: item.id }, [
+              _c("th", { attrs: { scope: "row" } }, [
+                _vm._v(_vm._s(item.title))
+              ]),
+              _vm._v(" "),
+              _c("td", [_c("base-timer")], 1),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: {
+                      type: "button",
+                      "data-id": item.id,
+                      "data-filename": item.file_name
+                    },
+                    on: { click: _vm.deleteFile }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            ])
+          }),
+          0
+        )
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -41306,18 +41356,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Delete")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
-        { staticClass: "btn btn-danger", attrs: { type: "button" } },
-        [_vm._v("Delete")]
-      )
     ])
   }
 ]
