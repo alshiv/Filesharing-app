@@ -1,5 +1,5 @@
 <template>
-  <div class="base-timer" v-if="this.$parent.newFile">
+  <div class="base-timer" v-if="newFile">
     <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <g class="base-timer__circle">
         <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
@@ -39,7 +39,7 @@ const COLOR_CODES = {
   }
 };
 
-const TIME_LIMIT = 3600;
+const TIME_LIMIT = 20;
 
 export default {
   props: {
@@ -51,7 +51,8 @@ export default {
   data() {
     return {
       timerInterval: null,
-      timePassed: this.timePassedProp
+      timePassed: this.timePassedProp,
+      newFile: true,
     };
   },
 
@@ -98,13 +99,13 @@ export default {
     timeLeft(newValue) {
       if (newValue <= 0) {
         this.onTimesUp();
-        this.disableActions();
+        this.newFile = false;
       }
     },
   },
 
   mounted() {
-    this.timePassed < TIME_LIMIT ? this.startTimer() : this.disableActions();
+    this.timePassed < TIME_LIMIT ? this.startTimer() : this.newFile = false;
   },
 
   methods: {
@@ -115,10 +116,6 @@ export default {
     startTimer() {
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
     },
-    disableActions() {
-      this.$parent.newFile = false, 
-      this.$emit('disabled', this.newFile);
-    }
   }
 };
 </script>

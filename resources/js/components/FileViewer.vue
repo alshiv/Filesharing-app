@@ -14,7 +14,7 @@
           <base-timer :time-passed-prop="item.time_passed"></base-timer>
         </td>
         <td>
-          <button type="button" class="btn btn-danger" @click='deleteFile' :data-id="item.id" :data-filename="item.file_name" v-if="newFile">Delete</button>
+          <button type="button" class="btn btn-danger" @click='deleteFile' :data-id="item.id" :data-filename="item.file_name">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -29,7 +29,6 @@ export default {
       items: {},
       filepath: [],
       id: '',
-      newFile: true,
     };
   },
   methods: {
