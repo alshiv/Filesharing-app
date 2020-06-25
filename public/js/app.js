@@ -1969,7 +1969,6 @@ var TIME_LIMIT = 3600;
   data: function data() {
     return {
       timerInterval: null,
-      newFile: true,
       timePassed: this.timePassedProp
     };
   },
@@ -2013,12 +2012,12 @@ var TIME_LIMIT = 3600;
     timeLeft: function timeLeft(newValue) {
       if (newValue <= 0) {
         this.onTimesUp();
-        this.newFile = false;
+        this.disableActions();
       }
     }
   },
   mounted: function mounted() {
-    this.timePassed < TIME_LIMIT ? this.startTimer() : this.newFile = false;
+    this.timePassed < TIME_LIMIT ? this.startTimer() : this.disableActions();
   },
   methods: {
     onTimesUp: function onTimesUp() {
@@ -2030,6 +2029,9 @@ var TIME_LIMIT = 3600;
       this.timerInterval = setInterval(function () {
         return _this.timePassed += 1;
       }, 1000);
+    },
+    disableActions: function disableActions() {
+      this.$parent.newFile = false, this.$emit('disabled', this.newFile);
     }
   }
 });
@@ -2303,7 +2305,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       items: {},
       filepath: [],
-      id: ''
+      id: '',
+      newFile: true
     };
   },
   methods: {
@@ -41125,7 +41128,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.newFile
+  return this.$parent.newFile
     ? _c("div", { staticClass: "base-timer" }, [
         _c(
           "svg",
@@ -41362,19 +41365,21 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: {
-                      type: "button",
-                      "data-id": item.id,
-                      "data-filename": item.file_name
-                    },
-                    on: { click: _vm.deleteFile }
-                  },
-                  [_vm._v("Delete")]
-                )
+                _vm.newFile
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: {
+                          type: "button",
+                          "data-id": item.id,
+                          "data-filename": item.file_name
+                        },
+                        on: { click: _vm.deleteFile }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  : _vm._e()
               ])
             ])
           }),
@@ -41392,9 +41397,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("File Title")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Timer")]),
+        _c("th", { attrs: { scope: "col" } }),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Delete")])
+        _c("th", { attrs: { scope: "col" } })
       ])
     ])
   }

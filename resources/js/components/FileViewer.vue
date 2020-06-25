@@ -3,8 +3,8 @@
     <thead>
       <tr>
         <th scope="col">File Title</th>
-        <th scope="col">Timer</th>
-        <th scope="col">Delete</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -14,7 +14,7 @@
           <base-timer :time-passed-prop="item.time_passed"></base-timer>
         </td>
         <td>
-          <button type="button" class="btn btn-danger" @click='deleteFile' :data-id="item.id" :data-filename="item.file_name">Delete</button>
+          <button type="button" class="btn btn-danger" @click='deleteFile' :data-id="item.id" :data-filename="item.file_name" v-if="newFile">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -29,6 +29,7 @@ export default {
       items: {},
       filepath: [],
       id: '',
+      newFile: true,
     };
   },
   methods: {
