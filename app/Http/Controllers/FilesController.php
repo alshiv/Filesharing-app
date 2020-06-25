@@ -17,6 +17,9 @@ class FilesController extends Controller
         $filesArray = json_decode(json_encode($files));
         $filesToShow = [];
         foreach($filesArray as $file){
+            $unix_created = strtotime($file->created_at);
+            $unix_now = strtotime(date("Y-m-d H:i:s"));
+            $file->time_passed = $unix_now - $unix_created;
             $file_path = explode('/', $file->file_name);
             if ($file_path[0] === $username){
                 $filesToShow[] = $file;

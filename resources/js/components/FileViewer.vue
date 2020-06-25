@@ -11,7 +11,7 @@
       <tr v-for="item in items" :key="item.id">
         <th scope="row">{{item.title}}</th>
         <td>
-          <base-timer></base-timer>
+          <base-timer :time-passed-prop="item.time_passed"></base-timer>
         </td>
         <td>
           <button type="button" class="btn btn-danger" @click='deleteFile' :data-id="item.id" :data-filename="item.file_name">Delete</button>
@@ -42,16 +42,16 @@ export default {
               console.log(error.message);
           })
       },
-      deleteFile(event){
+      async deleteFile(event){
           let formData = new FormData();
           this.filepath = event.target.getAttribute('data-filename');
           this.id = event.target.getAttribute('data-id');
           formData.append("filepath", this.filepath);
           formData.append("id", this.id);
-          axios.post('/api/files/delete', formData)
+          await axios.post('/api/files/delete', formData)
           .then(response => {
               console.log(response)
-              //this.getFiles();
+              this.getFiles();
           })
           .catch(error => {
               console.log(error.message)

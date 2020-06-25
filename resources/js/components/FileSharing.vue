@@ -13,7 +13,7 @@
               </div>
               <progress-bar :progress="progress" v-if="isUploading"></progress-bar>
             </form>
-            <file-viewer></file-viewer>
+            <file-viewer ref="viewer"></file-viewer>
           </div>
         </div>
       </div>
@@ -49,9 +49,13 @@ export default {
         })
         .then(response => {
           console.log(response);
+          const date = new Date();
+          const milliseconds = date.getTime();
+          const seconds = milliseconds / 1000;
           setTimeout(() => {
             this.isUploading = false;
             this.files = [];
+            this.$refs.viewer.getFiles();
           }, 1000)
         })
         .catch(error => {

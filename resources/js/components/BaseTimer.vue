@@ -45,7 +45,7 @@ export default {
   props: {
     timePassedProp: {
       type: Number,
-      default: Math.floor(Math.random()*1000)
+      default: 0
     }
   },
   data() {
