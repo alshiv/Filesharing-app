@@ -39,7 +39,7 @@ const COLOR_CODES = {
   }
 };
 
-const TIME_LIMIT = 20;
+const TIME_LIMIT = 3600;
 
 export default {
   props: {
@@ -100,6 +100,7 @@ export default {
       if (newValue <= 0) {
         this.onTimesUp();
         this.newFile = false;
+        this.$emit('time-end', this.newFile);
       }
     },
   },

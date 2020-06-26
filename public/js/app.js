@@ -1958,7 +1958,7 @@ var COLOR_CODES = {
     threshold: ALERT_THRESHOLD
   }
 };
-var TIME_LIMIT = 20;
+var TIME_LIMIT = 3600;
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     timePassedProp: {
@@ -2014,6 +2014,7 @@ var TIME_LIMIT = 20;
       if (newValue <= 0) {
         this.onTimesUp();
         this.newFile = false;
+        this.$emit('time-end', this.newFile);
       }
     }
   },
@@ -2297,56 +2298,99 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       items: {},
       filepath: [],
-      id: ''
+      id: "",
+      isDeleting: false
     };
   },
   methods: {
     getFiles: function getFiles() {
       var _this = this;
 
-      axios.get('/files/get-json').then(function (response) {
-        _this.items = response.data;
-        console.log(_this.items);
-      })["catch"](function (error) {
-        console.log(error.message);
-      });
-    },
-    deleteFile: function deleteFile(event) {
-      var _this2 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                formData = new FormData();
-                _this2.filepath = event.target.getAttribute('data-filename');
-                _this2.id = event.target.getAttribute('data-id');
-                formData.append("filepath", _this2.filepath);
-                formData.append("id", _this2.id);
-                _context.next = 7;
-                return axios.post('/api/files/delete', formData).then(function (response) {
-                  console.log(response);
+                _context.next = 2;
+                return axios.get("/files/get-json").then(function (response) {
+                  _this.items = response.data;
 
-                  _this2.getFiles();
+                  for (var key in _this.items) {
+                    if (_this.items[key].time_passed > 3600) {
+                      _this.items[key].state = false;
+                    } else {
+                      _this.items[key].state = true;
+                    }
+                  }
+
+                  console.log(_this.items);
                 })["catch"](function (error) {
                   console.log(error.message);
                 });
 
-              case 7:
+              case 2:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }))();
+    },
+    deleteFile: function deleteFile(event) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                formData = new FormData();
+                _this2.filepath = event.target.getAttribute("data-filename");
+                _this2.id = event.target.getAttribute("data-id");
+                formData.append("filepath", _this2.filepath);
+                formData.append("id", _this2.id);
+                _this2.isDeleting = true;
+                _context2.next = 8;
+                return axios.post("/api/files/delete", formData).then(function (response) {
+                  console.log(response);
+                  setTimeout(function () {
+                    _this2.getFiles();
+
+                    _this2.isDeleting = false;
+                  }, 100);
+                })["catch"](function (error) {
+                  console.log(error.message);
+                  _this2.isDeleting = false;
+                });
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    changeState: function changeState(e, id) {
+      this.getFiles();
     }
   },
   mounted: function mounted() {
@@ -41355,26 +41399,34 @@ var render = function() {
                 "td",
                 [
                   _c("base-timer", {
-                    attrs: { "time-passed-prop": item.time_passed }
+                    attrs: { "time-passed-prop": item.time_passed },
+                    on: {
+                      "time-end": function($event) {
+                        return _vm.changeState($event, item.id)
+                      }
+                    }
                   })
                 ],
                 1
               ),
               _vm._v(" "),
               _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: {
-                      type: "button",
-                      "data-id": item.id,
-                      "data-filename": item.file_name
-                    },
-                    on: { click: _vm.deleteFile }
-                  },
-                  [_vm._v("Delete")]
-                )
+                item.state
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: {
+                          type: "button",
+                          "data-id": item.id,
+                          "data-filename": item.file_name,
+                          disabled: _vm.isDeleting
+                        },
+                        on: { click: _vm.deleteFile }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  : _vm._e()
               ])
             ])
           }),
@@ -41392,9 +41444,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("File Title")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Time Left")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } })
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
       ])
     ])
   }
