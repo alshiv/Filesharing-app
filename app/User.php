@@ -39,6 +39,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getEmailForVerification()
     {
-        return 'schigolev@sibprofi.ru';
+        'schigolev@sibprofi.ru';
     }
 }
