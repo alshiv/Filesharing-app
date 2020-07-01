@@ -4,6 +4,7 @@
       <tr>
         <th scope="col">File Title</th>
         <th scope="col">Time Left</th>
+        <th scope="cold">Created At</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -16,6 +17,7 @@
             v-on:time-end="changeState($event, item.id)"
           ></base-timer>
         </td>
+        <td>{{formatDate(new Date(item.created_at))}}</td>
         <td>
           <button
             type="button"
@@ -85,6 +87,27 @@ export default {
     },
     changeState(e, id) {
       this.getFiles();
+    },
+    formatDate(date) {
+      let dd = date.getDate();
+      if (dd < 10) dd = "0" + dd;
+
+      let mm = date.getMonth() + 1;
+      if (mm < 10) mm = "0" + mm;
+
+      let yy = date.getFullYear() % 100;
+      if (yy < 10) yy = "0" + yy;
+
+      let hr = date.getHours();
+      if (hr < 10) hr = "0" + hr;
+
+      let mn = date.getMinutes();
+      if (mn < 10) mn = "0" + mn;
+
+      let sc = date.getSeconds();
+      if (sc < 10) sc = "0" + sc;
+
+      return dd + "." + mm + "." + yy + " " + hr + ":" + mn + ":" + sc;
     }
   },
   mounted() {

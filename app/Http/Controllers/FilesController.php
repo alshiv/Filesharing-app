@@ -71,7 +71,6 @@ class FilesController extends Controller
         $extension = $file->getClientOriginalExtension();
         $fileNameOnly = pathinfo($originalFileName, PATHINFO_FILENAME);
         $fileName = \Str::slug($fileNameOnly)."-".time().".".$extension;
-
         $uploadedFileName = $file->storeAs($username, $fileName);
 
         return [$uploadedFileName, $fileNameOnly];

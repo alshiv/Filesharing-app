@@ -25,6 +25,7 @@
 import ProgressBar from "./ProgressBar";
 import FileInput from "./FileInput";
 import FileViewer from "./FileViewer";
+import UserControl from "./UserControl";
 export default {
   methods: {
     clearFiles() {
@@ -72,7 +73,8 @@ export default {
   components: {
     FileInput,
     ProgressBar,
-    FileViewer
+    FileViewer,
+    UserControl
   },
   data() {
     return {
