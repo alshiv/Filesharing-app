@@ -1942,6 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var FULL_DASH_ARRAY = 283;
 var WARNING_THRESHOLD = 1000;
 var ALERT_THRESHOLD = 120;
@@ -2167,6 +2168,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -2278,7 +2280,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
 //
 //
 //
@@ -41280,42 +41281,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.newFile
-    ? _c("div", { staticClass: "base-timer" }, [
-        _c(
-          "svg",
-          {
-            staticClass: "base-timer__svg",
+  return _c("div", { staticClass: "base-timer" }, [
+    _c(
+      "svg",
+      {
+        staticClass: "base-timer__svg",
+        attrs: { viewBox: "0 0 100 100", xmlns: "http://www.w3.org/2000/svg" }
+      },
+      [
+        _c("g", { staticClass: "base-timer__circle" }, [
+          _c("circle", {
+            staticClass: "base-timer__path-elapsed",
+            attrs: { cx: "50", cy: "50", r: "45" }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            staticClass: "base-timer__path-remaining",
+            class: _vm.remainingPathColor,
             attrs: {
-              viewBox: "0 0 100 100",
-              xmlns: "http://www.w3.org/2000/svg"
+              "stroke-dasharray": _vm.circleDasharray,
+              d:
+                "\n          M 50, 50\n          m -45, 0\n          a 45,45 0 1,0 90,0\n          a 45,45 0 1,0 -90,0\n        "
             }
-          },
-          [
-            _c("g", { staticClass: "base-timer__circle" }, [
-              _c("circle", {
-                staticClass: "base-timer__path-elapsed",
-                attrs: { cx: "50", cy: "50", r: "45" }
-              }),
-              _vm._v(" "),
-              _c("path", {
-                staticClass: "base-timer__path-remaining",
-                class: _vm.remainingPathColor,
-                attrs: {
-                  "stroke-dasharray": _vm.circleDasharray,
-                  d:
-                    "\n          M 50, 50\n          m -45, 0\n          a 45,45 0 1,0 90,0\n          a 45,45 0 1,0 -90,0\n        "
-                }
-              })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("span", { staticClass: "base-timer__label" }, [
+          })
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm.newFile
+      ? _c("span", { staticClass: "base-timer__label" }, [
           _vm._v(_vm._s(_vm.formattedTimeLeft))
         ])
-      ])
-    : _vm._e()
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.newFile
+      ? _c("span", { staticClass: "base-timer__label" }, [_vm._v("00:00")])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41463,7 +41465,9 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("file-viewer", { ref: "viewer" })
+              _c("file-viewer", { ref: "viewer" }),
+              _vm._v(" "),
+              _c("user-control")
             ],
             1
           )
@@ -41526,22 +41530,20 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                item.state
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: {
-                          type: "button",
-                          "data-id": item.id,
-                          "data-filename": item.file_name,
-                          disabled: _vm.isDeleting
-                        },
-                        on: { click: _vm.deleteFile }
-                      },
-                      [_vm._v("Delete")]
-                    )
-                  : _vm._e()
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: {
+                      type: "button",
+                      "data-id": item.id,
+                      "data-filename": item.file_name,
+                      disabled: _vm.isDeleting || !item.state
+                    },
+                    on: { click: _vm.deleteFile }
+                  },
+                  [_vm._v("Delete")]
+                )
               ])
             ])
           }),

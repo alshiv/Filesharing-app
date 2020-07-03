@@ -1,5 +1,5 @@
 <template>
-  <div class="base-timer" v-if="newFile">
+  <div class="base-timer">
     <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <g class="base-timer__circle">
         <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
@@ -16,7 +16,8 @@
         />
       </g>
     </svg>
-    <span class="base-timer__label">{{ formattedTimeLeft }}</span>
+    <span class="base-timer__label" v-if="newFile">{{ formattedTimeLeft }}</span>
+    <span class="base-timer__label" v-if="!newFile">00:00</span>
   </div>
 </template>
 

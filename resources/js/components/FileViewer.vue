@@ -25,8 +25,7 @@
             @click="deleteFile"
             :data-id="item.id"
             :data-filename="item.file_name"
-            v-if="item.state"
-            :disabled="isDeleting"
+            :disabled="isDeleting||!item.state"
           >Delete</button>
         </td>
       </tr>

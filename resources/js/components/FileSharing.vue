@@ -14,6 +14,7 @@
               <progress-bar :progress="progress" v-if="isUploading"></progress-bar>
             </form>
             <file-viewer ref="viewer"></file-viewer>
+            <user-control></user-control>
           </div>
         </div>
       </div>
